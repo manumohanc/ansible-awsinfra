@@ -14,3 +14,10 @@
         name: ansible
         state: present
       register: key
+
+    - name: " Copy key to Home directory"
+      when: key.changed
+      copy:
+        content: "{{key.key.private_key}}"
+        dest: ansible.pem
+        mode: 0400
